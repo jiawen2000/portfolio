@@ -140,8 +140,6 @@ a{color:inherit;text-decoration:none;}
 .foot{max-width:56rem;margin:2rem auto 0;padding:1.5rem 2.4rem 2.4rem;
   border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;
   font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--ink3);}
-.foot .r{margin-left:auto;}
-.foot a:hover{color:var(--ink);}
 
 /* ══════════════════════════════════════════
    攝影閱讀器
@@ -193,8 +191,9 @@ a{color:inherit;text-decoration:none;}
 @media (max-width:900px){
   .wrap,.nav,.foot{padding-left:1.4rem;padding-right:1.4rem;}
   .nav{padding-top:1.1rem;padding-bottom:1.1rem;}
-  .nav ul{gap:1rem;font-size:.8rem;}
-  .nav .brand span{display:none;}
+  .nav ul{gap:.9rem;font-size:.8rem;}
+  .nav .brand{font-size:.86rem;}
+  .nav .brand span{font-size:.52rem;letter-spacing:.1em;margin-left:.4rem;}
   .card{padding:2.4rem 0 1.8rem;}
   .card .ct a{display:block;margin:0;}
   .blk .row{grid-template-columns:1fr;gap:.1rem;}
@@ -206,7 +205,7 @@ a{color:inherit;text-decoration:none;}
   .vwork{grid-template-columns:1fr;gap:.7rem;}
   .vwork .md,.vwork .ar{display:none;}
   .vthumb{height:auto;}
-  .vthumb img{height:auto;width:100%;max-width:14rem;}
+  .vthumb img{height:auto;width:100%;max-width:none;}
   .rtop,.rbar,.prog{padding-left:1.4rem;padding-right:1.4rem;}
   .stage{padding:.7rem .8rem;gap:.5rem;}
   .arrow{width:1.9rem;height:1.9rem;font-size:.75rem;}
