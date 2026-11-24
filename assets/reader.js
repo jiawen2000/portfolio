@@ -14,6 +14,12 @@ const elPl = document.getElementById("pl");
 const elPn = document.getElementById("pn");
 const elBar = document.getElementById("bar");
 
+/* 英文版（en/reader.html）共用本檔：以 <html lang> 判斷語言，資源路徑往上一層 */
+const EN = document.documentElement.lang === "en";
+const BASE = EN ? "../" : "";
+const PLACE_EN = { "01": "Guangdong, China", "02": "New York, USA",
+                   "03": "Inner Mongolia, China", "04": "Taiwan", "05": "India" };
+
 /** 由網址的 ?s= 取得系列，超出範圍則回到第一組。 */
 function pick_series() {
   const n = Number(new URLSearchParams(location.search).get("s"));
@@ -33,7 +39,7 @@ function build_page(page) {
     fig.style.cssText =
       "left:" + f.x + "%;top:" + f.y + "%;width:" + f.w + "%;height:" + f.h + "%";
     const img = document.createElement("img");
-    img.src = "assets/img/" + f.src;
+    img.src = BASE + "assets/img/" + f.src;
     img.alt = "";
     img.decoding = "async";
     fig.appendChild(img);
@@ -48,7 +54,7 @@ function preload(i) {
   if (!page) return;
   page.figs.forEach((f) => {
     const img = new Image();
-    img.src = "assets/img/" + f.src;
+    img.src = BASE + "assets/img/" + f.src;
   });
 }
 
@@ -59,12 +65,18 @@ function render(i) {
   sheet.appendChild(build_page(pages[index]));
 
   elSn.textContent = series.no;
-  elSt.textContent = series.title + (series.en ? " " + series.en : "");
-  elPl.textContent = series.place + "　·　" + series.date;
+  elSt.textContent = EN
+    ? series.en + " " + series.title
+    : series.title + (series.en ? " " + series.en : "");
+  elPl.textContent = EN
+    ? PLACE_EN[series.no] + " · " + series.date
+    : series.place + "　·　" + series.date;
   elPn.textContent = index + 1 + " / " + TOTAL;
   elBar.style.width = ((index + 1) / TOTAL) * 100 + "%";
   sheet.setAttribute(
-    "aria-label", series.title + " 第 " + (index + 1) + " 頁，共 " + TOTAL + " 頁");
+    "aria-label", EN
+      ? series.en + ", page " + (index + 1) + " of " + TOTAL
+      : series.title + " 第 " + (index + 1) + " 頁，共 " + TOTAL + " 頁");
 
   btnPrev.disabled = index === 0;
   btnNext.disabled = index === TOTAL - 1;
@@ -107,5 +119,7 @@ sheet.addEventListener("touchend", (e) => {
   touch_x = null;
 }, { passive: true });
 
-document.title = series.title + "｜林佳玟";
+document.title = EN ? series.en + " | Jia Wen Lin" : series.title + "｜林佳玟";
+/* 切換語言時留在同一組專題 */
+document.querySelectorAll(".lang a").forEach((a) => { a.href += location.search; });
 render(0);

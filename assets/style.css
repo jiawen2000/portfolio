@@ -45,8 +45,26 @@ a{color:inherit;text-decoration:none;}
   letter-spacing:.16em;color:var(--ink3);margin-left:.55rem;}
 .nav ul{display:flex;gap:1.5rem;list-style:none;margin:0 0 0 auto;padding:0;
   font-size:.84rem;color:var(--ink3);}
+.nav li{white-space:nowrap;}
 .nav a:hover{color:var(--ink);}
 .nav [aria-current="page"]{color:var(--ink);box-shadow:inset 0 -1px 0 var(--mark);}
+
+/* ── 語言切換：中 / EN，當前語言墨黑、另一個弱化灰 ── */
+.nav .lang{margin:0 0 0 1.5rem;font-family:var(--mono);font-size:.68rem;
+  letter-spacing:.08em;color:var(--ink3);white-space:nowrap;}
+.nav .lang b{font-weight:400;color:var(--ink);}
+
+/* ── 英文版（site/en/）：拉丁字體優先，行距收緊 ── */
+html[lang="en"]{
+  --sans:system-ui,-apple-system,"Helvetica Neue",Arial,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+}
+html[lang="en"] .card .say{line-height:1.8;max-width:34rem;}
+html[lang="en"] .card .say.narrow{max-width:30rem;}
+/* 英文獎項標記較長：獨立一行並允許換行，手機才不會撐破版面 */
+html[lang="en"] .work .aw,html[lang="en"] .vwork .aw{display:block;margin-left:0;white-space:normal;}
+/* 中文原題下方的英文小字 */
+.tr{display:block;font-size:.76rem;font-weight:400;color:var(--ink2);
+  line-height:1.55;margin-top:.2rem;}
 
 /* ── 頁首名片 ─────────────────────────────── */
 .card{padding:3.4rem 0 2.4rem;}
@@ -216,8 +234,19 @@ a{color:inherit;text-decoration:none;}
   /* 直向手機以寬度決定紙頁尺寸，A4 比例才不會撐破畫面 */
   .sheet{flex:1 1 auto;height:auto;width:auto;}
 }
+@media (max-width:900px){
+  .nav .lang{margin-left:.9rem;font-size:.62rem;}
+}
+@media (max-width:560px){
+  /* 英文導覽較長：語言切換留在第一列右側，四項導覽換到第二列 */
+  html[lang="en"] .nav{flex-wrap:wrap;row-gap:.5rem;}
+  html[lang="en"] .nav .lang{order:2;margin-left:auto;}
+  html[lang="en"] .nav ul{order:3;flex-basis:100%;margin-left:0;gap:1.1rem;}
+}
 @media (max-width:420px){
   .nav ul{gap:.8rem;font-size:.76rem;}
+  /* 窄螢幕加了語言切換後排不下：中文版收起品牌旁的英文名 */
+  html[lang="zh-Hant"] .nav .brand span{display:none;}
 }
 
 /* 尊重「減少動態效果」設定 */
